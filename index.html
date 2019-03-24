@@ -1,20 +1,107 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Primer proyecto</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" media="screen" href="assets/css/main.css">
-</head>
-<body>
-  <div class="form-group">
-    <label for=""></label>
-    <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
-    <small id="helpId" class="form-text text-muted">Help text</small>
-  </div>
+<html lang="es">
 
-  <!-- Scripts -->
-  <script src="assets/js/main.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Simulación y Modelos | Datos iniciales</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Simulación y Modelos</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Metodos
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="partials/cuadradosMedios.html">Cuadrado Medio</a>
+                            <a class="dropdown-item" href="partials/productoMedio.html">Producto Medio</a>
+                            <a class="dropdown-item" href="partials/productoMedioVariado.html">Producto Medio
+                                Variado</a>
+                            <a class="dropdown-item" href="partials/congruencialMixto.html">Congruencial Mixto</a>
+                            <a class="dropdown-item" href="partials/congruencialMultiplicativo.html">Congruencial
+                                Multiplicativo</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <h4>Tabla #1</h4>
+        <table id="table1" class="table text-center table-sm table-striped ">
+            <thead class="bg-dark text-white">
+                <tr>
+                    <td>Destino</td>
+                    <td>f(x)</td>
+                    <td>F(x)</td>
+                    <td>M.C.</td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <h4>Tabla #2</h4>
+        <table id="table2" class="table text-center table-sm table-striped ">
+            <thead class="bg-dark text-white">
+                <tr>
+                    <td>Tipo de boletos</td>
+                    <td>f(x)</td>
+                    <td>F(x)</td>
+                    <td>M.C.</td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <h4>Tabla #3</h4>
+        <table id="table3" class="table text-center table-sm table-striped ">
+            <thead class="bg-dark text-white">
+                <tr>
+                    <td>N° de personas por paq.</td>
+                    <td>f(x)</td>
+                    <td>F(x)</td>
+                    <td>M.C.</td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <h4>Tabla #4</h4>
+        <table id="table4" class="table text-center table-sm table-striped ">
+            <thead class="bg-dark text-white">
+                <tr>
+                    <td>Paq. Vendidos por dia</td>
+                    <td>f(x)</td>
+                    <td>F(x)</td>
+                    <td>M.C.</td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
 </body>
+
 </html>

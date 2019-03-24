@@ -1,0 +1,4 @@
+.table-sm td, .table-sm th {
+    padding: 0rem !important;
+    vertical-align: middle;
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Simulación y Modelos | Producto Medio</title>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">    
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+
+<body>
+
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">Simulación y Modelos</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            Metodos
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="cuadradosMedios.html">Cuadrado Medio</a>
+                            <a class="dropdown-item" href="productoMedio.html">Producto Medio</a>
+                            <a class="dropdown-item" href="productoMedioVariado.html">Producto Medio Variado</a>
+                            <a class="dropdown-item" href="congruencialMixto.html">Congruencial Mixto</a>
+                            <a class="dropdown-item" href="congruencialMultiplicativo.html">Congruencial Multiplicativo</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br><br><br>
+    <div class="container">
+        <form action="" class="row">
+            <div class="col-md-3">
+
+                <div class="form-group">
+                    <label for="">Cantidad de dias</label>
+                    <input type="text" class="form-control" id="dias" value="1" title="Solo se permiten números"
+                        required pattern="[0-9]+">
+                </div>
+            </div>
+            <div class="col-12"></div>  
+            <div class="col-md-4 offset-md-4">
+                <div class="input-group mb-3">
+                    <input placeholder="Xn-1" type="text" class="form-control" id="Xn_1" value="511" required
+                        pattern="[0-9]+">
+                    <input placeholder="Xn" type="text" class="form-control" id="Xn" value="47" required
+                        pattern="[0-9]+">
+                    <input placeholder="k" type="text" class="form-control" id="k" value="3" required
+                        pattern="[0-9]+">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-success">Generar</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <br>
+
+
+    <div class="container">
+        <h4>Resultados</h4>
+        <table id="tableResults" class="table text-center table-sm table-striped ">
+            <thead class="bg-dark text-white">
+                <tr>
+                    <td>Dias</td>
+                    <td>Datos</td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../assets/js/main.js"></script>
+    <script>
+        $('form').submit(function (ev) {
+
+            ev.preventDefault();
+            let Xn_1 = parseInt($('#Xn_1').val());            
+            let Xn = parseInt($('#Xn').val());
+            let cant = (parseInt($('#dias').val()) + 1) * 21;
+            let dias = parseInt($('#dias').val());
+            let k = parseInt($('#k').val());
+
+            //console.log(cant)
+            //console.log(producto_medio(Xn_1, Xn, cant, k, []))
+            let pseudos = producto_medio(Xn_1, Xn, cant, k, [])
+            $('#tableResults tbody').html(resolve(pseudos, dias).estructure);
+
+        })
+    </script>
+</body>
+
+</html>
