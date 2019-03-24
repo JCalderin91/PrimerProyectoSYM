@@ -225,16 +225,18 @@ function resolve(pseudos, dias) {
 
 
     results.forEach(function (item, index) {
-        data = `<table class="table table-sm text-center mb-0" >`
+        data = `<table class="table table-sm mb-0">`
         item.content.forEach(function (item) {
             data += `<tr>
-                <td><strong>Destino</strong>: ${item.destino.value} <span class="text-primary">(${item.destino.pseudo})</span> </td>
-                <td><strong>Clase</strong>: ${item.clase.value} <span class="text-primary">(${item.clase.pseudo})</span> </td>
-                <td><strong>Personas</strong>: ${item.cantPersonas.value} <span class="text-primary">(${item.cantPersonas.pseudo})</span> </td>
-                <td><strong>Costo</strong>: ${item.costo} $</td>
-            </tr>`
+                <td class="row">
+                    <div class="col-md-3"><strong>Destino</strong>: ${item.destino.value} <span class="text-primary">(${item.destino.pseudo})</span> </div>
+                    <div class="col-md-3"><strong>Clase</strong>: ${item.clase.value} <span class="text-primary">(${item.clase.pseudo})</span> </div>
+                    <div class="col-md-3"><strong>Personas</strong>: ${item.cantPersonas.value} <span class="text-primary">(${item.cantPersonas.pseudo})</span> </div>
+                    <div class="col-md-3"><strong>Costo</strong>: ${item.costo} $</div>
+                </td>
+            `
         })
-        data += `</table>`
+        data += `</tr></table>`
 
         content += `<tr>
             <td><strong>Dia: </strong>${index+1} - <strong>Paquetes: </strong>${item.content.length} <span class="text-primary">(${item.pseudo})</span></td>

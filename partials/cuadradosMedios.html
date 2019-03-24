@@ -56,9 +56,7 @@
             <div class="col-12"></div>  
             <div class="col-md-4 offset-md-4">
                 <div class="input-group mb-3">
-                    <input placeholder="Semilla" type="text" class="form-control" id="sem" value="295" required
-                        pattern="[0-9]+">
-                    <input placeholder="k" type="text" class="form-control" id="k" value="3" required
+                    <input placeholder="Semilla" type="text" class="form-control" id="Xn" value="295" required
                         pattern="[0-9]+">
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-success">Generar</button>
@@ -73,7 +71,7 @@
 
     <div class="container">
         <h4>Resultados</h4>
-        <table id="tableResults" class="table text-center table-sm table-striped ">
+        <table id="tableResults" class="table table-sm table-striped ">
             <thead class="bg-dark text-white">
                 <tr>
                     <td>Dias</td>
@@ -92,10 +90,10 @@
         $('form').submit(function (ev) {
 
             ev.preventDefault();
-            let sem = parseInt($('#sem').val())
-            let cant = (parseInt($('#dias').val()) + 1) * 21
+            let sem = parseInt($('#Xn').val())
+            let cant = (parseInt($('#dias').val()) * 21) + 1
             let dias = parseInt($('#dias').val())
-            let k = parseInt($('#k').val());
+            let k = $('#Xn').val().length;
 
             //console.log(cant)
             console.log(cuadrado_medio(sem, cant, k, []))
