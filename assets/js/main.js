@@ -157,115 +157,110 @@ function resolve(pseudos, dias) {
     let results = [];
     let costo1, costo2 = 0;
     let content, data = ''
+    let _pseudos = [...pseudos];
 
- 
-    for (let i = 0; i < dias; i++) {
-        p = pseudos.slice(0, 1)[0]
-        pAux = pseudos.slice(0, 1)[0]
-        pseudos.shift()
-        //console.log('Dia #'+(i+1)+' - Pseudoaleatorio: '+p)
-        //console.log(searchPseudo(p, table4))
-        day = searchPseudo(p, table4)
 
-        for (let j = 1; j <= day.value; j++) {
-            //console.log('Paquete #'+j)
+    if(prueba_ks(_pseudos)){    
+        for (let i = 0; i < dias; i++) {
             p = pseudos.slice(0, 1)[0]
+            pAux = pseudos.slice(0, 1)[0]
             pseudos.shift()
-            //console.log(searchPseudo(p, table1))  
-            destino = {
-                value: searchPseudo(p, table1).value,
-                pseudo: p
-            }
-            costo1 = searchPseudo(p, table1).primera
-            costo2 = searchPseudo(p, table1).turista            
-
-
-            p = pseudos.slice(0, 1)[0]
-            pseudos.shift()
-            //console.log(searchPseudo(p, table3)) 
-            cantPersonas = {
-                value: searchPseudo(p, table3).value,
-                pseudo: p
-            }
-
-
-            p = pseudos.slice(0, 1)[0]
-            pseudos.shift()
-            //console.log(p)
-            //console.log(searchPseudo(p, table2)) 
-            if (searchPseudo(p, table2).value === 'Primera') {
-                costo = costo1 * parseInt(cantPersonas.value)
-                clase = {
-                    value: 'Alta',
+            //console.log('Dia #'+(i+1)+' - Pseudoaleatorio: '+p)
+            //console.log(searchPseudo(p, table4))
+            day = searchPseudo(p, table4)
+    
+            for (let j = 1; j <= day.value; j++) {
+                //console.log('Paquete #'+j)
+                p = pseudos.slice(0, 1)[0]
+                pseudos.shift()
+                //console.log(searchPseudo(p, table1))  
+                destino = {
+                    value: searchPseudo(p, table1).value,
                     pseudo: p
                 }
-            } else {
-                costo = costo2 * parseInt(cantPersonas.value)
-                clase = {
-                    value: 'Media',
+                costo1 = searchPseudo(p, table1).primera
+                costo2 = searchPseudo(p, table1).turista            
+    
+    
+                p = pseudos.slice(0, 1)[0]
+                pseudos.shift()
+                //console.log(searchPseudo(p, table3)) 
+                cantPersonas = {
+                    value: searchPseudo(p, table3).value,
                     pseudo: p
                 }
+    
+    
+                p = pseudos.slice(0, 1)[0]
+                pseudos.shift()
+                //console.log(p)
+                //console.log(searchPseudo(p, table2)) 
+                if (searchPseudo(p, table2).value === 'Primera') {
+                    costo = costo1 * parseInt(cantPersonas.value)
+                    clase = {
+                        value: 'Alta',
+                        pseudo: p
+                    }
+                } else {
+                    costo = costo2 * parseInt(cantPersonas.value)
+                    clase = {
+                        value: 'Media',
+                        pseudo: p
+                    }
+                }
+    
+    
+    
+    
+                result.push({
+                    paquete: j,
+                    destino: destino,
+                    costo: costo,
+                    clase: clase,
+                    cantPersonas: cantPersonas,
+                    pseudo: pAux
+                })
             }
-
-
-
-
-
-
-            result.push({
-                paquete: j,
-                destino: destino,
-                costo: costo,
-                clase: clase,
-                cantPersonas: cantPersonas,
+            results.push({
+                content: result,
                 pseudo: pAux
             })
+            result = []
         }
-        results.push({
-            content: result,
-            pseudo: pAux
+    
+        results.forEach(function (item, index) {
+            data = `<table class="table table-sm mb-0">`
+            item.content.forEach(function (item) {
+                data += `<tr>
+                    <td class="row">
+                        <div class="col-md-3"><strong>Destino</strong>: ${item.destino.value} <span class="text-primary">(${item.destino.pseudo})</span> </div>
+                        <div class="col-md-3"><strong>Clase</strong>: ${item.clase.value} <span class="text-primary">(${item.clase.pseudo})</span> </div>
+                        <div class="col-md-3"><strong>Personas</strong>: ${item.cantPersonas.value} <span class="text-primary">(${item.cantPersonas.pseudo})</span> </div>
+                        <div class="col-md-3"><strong>Costo</strong>: ${item.costo} $</div>
+                    </td>
+                `
+            })
+            data += `</tr></table>`
+    
+            content += `<tr>
+                <td><strong>Dia: </strong>${index+1} - <strong>Paquetes: </strong>${item.content.length} <span class="text-primary">(${item.pseudo})</span></td>
+                <td>${data}</td>
+            </tr>`
+            data = ''
         })
-        result = []
+    
+        //OPERACIONES PARA RESPONDER PREGUNTAS
+        console.log(results)
+    
+        return {
+            estructure: content,
+            data: '-'
+        }
+    }else{
+        swal ( "Oops" ,  "Estos datos no generan numeros pseudoaleatorios validos" ,  "error" );
+        $('form')[0].reset()
     }
 
-
-    results.forEach(function (item, index) {
-        data = `<table class="table table-sm mb-0">`
-        item.content.forEach(function (item) {
-            data += `<tr>
-                <td class="row">
-                    <div class="col-md-3"><strong>Destino</strong>: ${item.destino.value} <span class="text-primary">(${item.destino.pseudo})</span> </div>
-                    <div class="col-md-3"><strong>Clase</strong>: ${item.clase.value} <span class="text-primary">(${item.clase.pseudo})</span> </div>
-                    <div class="col-md-3"><strong>Personas</strong>: ${item.cantPersonas.value} <span class="text-primary">(${item.cantPersonas.pseudo})</span> </div>
-                    <div class="col-md-3"><strong>Costo</strong>: ${item.costo} $</div>
-                </td>
-            `
-        })
-        data += `</tr></table>`
-
-        content += `<tr>
-            <td><strong>Dia: </strong>${index+1} - <strong>Paquetes: </strong>${item.content.length} <span class="text-primary">(${item.pseudo})</span></td>
-            <td>${data}</td>
-        </tr>`
-        data = ''
-    })
-
-
-
-
-
-    //OPERACIONES PARA RESPONDER PREGUNTAS
-    console.log(results)
-
-
-
-
-
-
-    return {
-        estructure: content,
-        data: '-'
-    }
 }
 
 function loadTable(idTable, arr) {
