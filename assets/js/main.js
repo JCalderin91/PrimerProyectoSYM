@@ -129,6 +129,13 @@ function prueba_ks(a) {
 }
 
 
+$('#clear').on('click', function(){
+    $('form')[0].reset();
+    $('#tableResults tbody').html('');
+})
+
+
+
 
 //console.log('-----------cuadrado_medio-----------')
 //console.log(cuadrado_medio(295, 10, 3, []))
@@ -271,96 +278,26 @@ function loadTable(idTable, arr) {
 }
 
 let table1 = [{
-        value: 'Tibet',
-        fmin: 0.020,
-        fmay: 0.020,
-        min: 0.000,
-        max: 0.019,
-        primera: 750,
-        turista: 630
-    },
-    {
-        value: 'Madrid',
-        fmin: 0.070,
-        fmay: 0.090,
-        min: 0.020,
-        max: 0.089,
-        primera: 590,
-        turista: 480
-    },
-    {
-        value: 'Venecia',
-        fmin: 0.150,
-        fmay: 0.240,
-        min: 0.090,
-        max: 0.239,
-        primera: 540,
-        turista: 420
-    },
-    {
-        value: 'Aruba',
-        fmin: 0.200,
-        fmay: 0.440,
-        min: 0.240,
-        max: 0.439,
-        primera: 230,
-        turista: 110
-    },
-    {
-        value: 'Miami',
-        fmin: 0.200,
-        fmay: 0.640,
-        min: 0.440,
-        max: 0.639,
-        primera: 310,
-        turista: 190
-    },
-    {
-        value: 'Acapulco',
-        fmin: 0.160,
-        fmay: 0.800,
-        min: 0.640,
-        max: 0.799,
-        primera: 450,
-        turista: 330
-    },
-    {
-        value: 'Paris',
-        fmin: 0.100,
-        fmay: 0.900,
-        min: 0.800,
-        max: 0.899,
-        primera: 665,
-        turista: 545
-    },
-    {
-        value: 'Rio de Janeiro',
-        fmin: 0.060,
-        fmay: 0.960,
-        min: 0.900,
-        max: 0.959,
-        primera: 428,
-        turista: 308
-    },
-    {
-        value: 'Buenos Aires',
-        fmin: 0.050,
-        fmay: 0.990,
-        min: 0.960,
-        max: 0.989,
-        primera: 497,
-        turista: 377
-    },
-    {
-        value: 'Londres',
-        fmin: 0.010,
-        fmay: 1.000,
-        min: 0.990,
-        max: 1.000,
-        primera: 685,
-        turista: 565
-    },
-]
+        value: 'Tibet', fmin: 0.020, fmay: 0.020, min: 0.000, max: 0.019, primera: 750, turista: 630
+    },    {
+        value: 'Madrid', fmin: 0.070, fmay: 0.090, min: 0.020, max: 0.089, primera: 590, turista: 480
+    },    {
+        value: 'Venecia', fmin: 0.150, fmay: 0.240, min: 0.090, max: 0.239, primera: 540, turista: 420
+    },    {
+        value: 'Aruba', fmin: 0.200, fmay: 0.440, min: 0.240, max: 0.439, primera: 230, turista: 110
+    },    {
+        value: 'Miami', fmin: 0.200, fmay: 0.640, min: 0.440, max: 0.639, primera: 310, turista: 190
+    },    {
+        value: 'Acapulco', fmin: 0.160, fmay: 0.800, min: 0.640, max: 0.799, primera: 450, turista: 330
+    },    {
+        value: 'Paris', fmin: 0.100, fmay: 0.900, min: 0.800, max: 0.899, primera: 665, turista: 545
+    },    {
+        value: 'Rio de Janeiro', fmin: 0.060, fmay: 0.960, min: 0.900, max: 0.959, primera: 428, turista: 308
+    },    {
+        value: 'Buenos Aires', fmin: 0.050, fmay: 0.990, min: 0.960, max: 0.989, primera: 497, turista: 377
+    },    {
+        value: 'Londres', fmin: 0.010, fmay: 1.000, min: 0.990, max: 1.000, primera: 685, turista: 565
+    },]
 
 let table2 = [{
         value: 'Turista',
@@ -475,8 +412,31 @@ let table4 = [{
     },
 ]
 
-loadTable('table1', table1)
-loadTable('table2', table2)
+let content = '';
+table1.forEach(function (item) {
+    content += `<tr>
+                    <td>${item.value}</td>
+                    <td>${item.fmin}</td>
+                    <td>${item.primera} $</td>
+                    <td>${item.turista} $</td>
+                    <td>${item.fmay}</td>
+                    <td>${item.min} - ${item.max}</td>
+                </tr>`
+})
+$('#table1 tbody').html(content);
+
+content = '';
+table2.forEach(function (item) {
+    content += `<tr>
+                    <td>${item.value}</td>
+                    <td>${item.fmin}</td>
+                    <td>Clase ${item.clase}</td>
+                    <td>${item.fmay}</td>
+                    <td>${item.min} - ${item.max}</td>
+                </tr>`
+})
+$('#table2 tbody').html(content);
+
 loadTable('table3', table3)
 loadTable('table4', table4)
 

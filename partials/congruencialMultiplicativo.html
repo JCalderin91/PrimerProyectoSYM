@@ -14,7 +14,7 @@
 
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-          <a class="navbar-brand" href="../index.html">Simulación y Modelos</a>
+            <a class="navbar-brand" href="../index.html">Simulación y Modelos</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -22,10 +22,15 @@
 
             <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">
+                            Datos iniciales
+                        </a>
+                    </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Metodos
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -33,7 +38,8 @@
                             <a class="dropdown-item" href="productoMedio.html">Producto Medio</a>
                             <a class="dropdown-item" href="productoMedioVariado.html">Producto Medio Variado</a>
                             <a class="dropdown-item" href="congruencialMixto.html">Congruencial Mixto</a>
-                            <a class="dropdown-item" href="congruencialMultiplicativo.html">Congruencial Multiplicativo</a>
+                            <a class="dropdown-item active" href="congruencialMultiplicativo.html">Congruencial
+                                Multiplicativo</a>
                         </div>
                     </li>
                 </ul>
@@ -44,30 +50,36 @@
     <div class="container">
         <form action="" class="row">
             <div class="col-md-3">
-    
+
                 <div class="form-group">
                     <label for="">Cantidad de dias</label>
                     <input type="text" class="form-control" id="dias" value="1" title="Solo se permiten números"
                         required pattern="[0-9]+">
                 </div>
             </div>
-            <div class="col-12"></div>  
+            <div class="col-12"></div>
             <div class="col-md-4 offset-md-4">
                 <div class="input-group mb-3">
-                    <input title="Solo se permiten números" placeholder="Xn" type="text" class="form-control" id="Xn" value="9" required pattern="[0-9]+">
-                    <input title="Solo se permiten números" placeholder="a" type="text" class="form-control" id="a" value="11" required pattern="[0-9]+">
-                    <input title="Solo se permiten números" placeholder="mod" type="text" class="form-control" id="mod" value="128" required pattern="[0-9]+">
+                    <div class="input-group-prepend">
+                        <button type="button" id="clear" class="btn btn-danger">Limpiar</button>
+                    </div>
+                    <input title="Solo se permiten números" placeholder="Xn" type="text" class="form-control" id="Xn"
+                        value="9" required pattern="[0-9]+">
+                    <input title="Solo se permiten números" placeholder="a" type="text" class="form-control" id="a"
+                        value="11" required pattern="[0-9]+">
+                    <input title="Solo se permiten números" placeholder="mod" type="text" class="form-control" id="mod"
+                        value="128" required pattern="[0-9]+">
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-success">Generar</button>
                     </div>
                 </div>
             </div>
-    
+
         </form>
     </div>
     <br>
-    
-    
+
+
     <div class="container">
         <h4>Resultados</h4>
         <table id="tableResults" class="table table-sm table-striped ">
@@ -80,27 +92,27 @@
             <tbody></tbody>
         </table>
     </div>
-    
-    
+
+
     <script src="../assets/js/jquery.min.js"></script>
     <script src="../assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../assets/js/sweetAlert.min.js"></script>
     <script type="text/javascript" src="../assets/js/main.js"></script>
     <script>
         $('form').submit(function (ev) {
-    
+
             ev.preventDefault();
-            let Xn = parseInt($('#Xn').val());            
+            let Xn = parseInt($('#Xn').val());
             let a = parseInt($('#a').val());
             let mod = parseInt($('#mod').val());
             let cant = (parseInt($('#dias').val()) * 21) + 1;
             let dias = parseInt($('#dias').val());
-            
+
             let pseudos = congruencial_multiplicativo(Xn, a, mod, mod, cant, [])
             $('#tableResults tbody').html(resolve(pseudos, dias).estructure);
-    
+
         })
     </script>
-    </body>
-    
-    </html>
+</body>
+
+</html>
