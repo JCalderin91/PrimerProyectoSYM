@@ -177,26 +177,7 @@ function resolve(pseudos, dias) {
                 pseudo: p
             }
             costo1 = searchPseudo(p, table1).primera
-            costo2 = searchPseudo(p, table1).turista
-
-
-            p = pseudos.slice(0, 1)[0]
-            pseudos.shift()
-            //console.log(p)
-            //console.log(searchPseudo(p, table2)) 
-            if (searchPseudo(p, table2).value === 'Primera') {
-                costo = costo1
-                clase = {
-                    value: 'Alta',
-                    pseudo: p
-                }
-            } else {
-                costo = costo2
-                clase = {
-                    value: 'Media',
-                    pseudo: p
-                }
-            }
+            costo2 = searchPseudo(p, table1).turista            
 
 
             p = pseudos.slice(0, 1)[0]
@@ -206,6 +187,30 @@ function resolve(pseudos, dias) {
                 value: searchPseudo(p, table3).value,
                 pseudo: p
             }
+
+
+            p = pseudos.slice(0, 1)[0]
+            pseudos.shift()
+            //console.log(p)
+            //console.log(searchPseudo(p, table2)) 
+            if (searchPseudo(p, table2).value === 'Primera') {
+                costo = costo1 * parseInt(cantPersonas.value)
+                clase = {
+                    value: 'Alta',
+                    pseudo: p
+                }
+            } else {
+                costo = costo2 * parseInt(cantPersonas.value)
+                clase = {
+                    value: 'Media',
+                    pseudo: p
+                }
+            }
+
+
+
+
+
 
             result.push({
                 paquete: j,
