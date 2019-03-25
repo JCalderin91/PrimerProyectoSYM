@@ -43,27 +43,16 @@ function congruencial_multiplicativo(Xn, a, mod, div, cant, result) {
     return result
 }
 
+
 /*************************************************/
 //Determina el nivel de aceptacion de acuerdo a la cantidad de numeros aleatorios
 function nivel_ks(cant) {
     //Si la cantidad de numeros aleatorios es 8, entonces se devuelve el nivel correspondiente
-    if (cant == 8) {
-        return 0.45427;
+    if (cant == 22) {
+        return 0.28087;
     }
-    if (cant == 10) {
-        return 0.40925;
-    }
-    if (cant == 20) {
-        return 0.29408;
-    }
-    if (cant == 30) {
-        return 0.24170;
-    }
-    if (cant == 40) {
-        return 0.21012;
-    }
-    if (cant == 50) {
-        return 0.18841;
+    if (cant == 43) {
+        return 0.20056;
     }
     if (cant > 50) {
         return 1.36 / Math.sqrt(cant);
@@ -87,7 +76,7 @@ function prueba_ks(a) {
         return a - b
     }); //Se ordenan los numeros aleatorios de menor a mayor
 
-    console.log(num)
+    //console.log(num)
     //ciclo que se repite de acuerdo a la cantidad de numeros aleatorios
     //Por ejemplo: si hay 3 numeros aleatorio [0.05, 0.15, 0.34]
     //arr_i[0] = (i+1)/ cantidad de numeros aleatorios => (0+1)/3
@@ -129,6 +118,8 @@ function prueba_ks(a) {
 
     //Ahora si el valor de max es menor o igual al nivel de aceptacion, se aceptan los numeros aleatorios
     //Si no, se rechazan.
+    console.log(cant)
+    console.log('*'+nivel_ks(cant))
     if (max <= nivel_ks(cant)) {
         return true;
     } else {
@@ -159,6 +150,9 @@ function resolve(pseudos, dias) {
     let content, data = ''
     let _pseudos = [...pseudos];
 
+    console.log(_pseudos)
+    console.log('-')
+    console.log(pseudos)
 
     if(prueba_ks(_pseudos)){    
         for (let i = 0; i < dias; i++) {

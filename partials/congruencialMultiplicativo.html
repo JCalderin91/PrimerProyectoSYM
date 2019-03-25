@@ -93,7 +93,7 @@
             let Xn = parseInt($('#Xn').val());            
             let a = parseInt($('#a').val());
             let mod = parseInt($('#mod').val());
-            let cant = (parseInt($('#dias').val()) + 1) * 21;
+            let cant = (parseInt($('#dias').val()) * 21) + 1;
             let dias = parseInt($('#dias').val());
             
             let pseudos = congruencial_multiplicativo(Xn, a, mod, mod, cant, [])

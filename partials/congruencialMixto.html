@@ -96,7 +96,7 @@
             let a = parseInt($('#a').val());
             let b = parseInt($('#b').val());
             let mod = parseInt($('#mod').val());
-            let cant = (parseInt($('#dias').val()) + 1) * 21;
+            let cant = (parseInt($('#dias').val()) * 21) + 1;
             let dias = parseInt($('#dias').val());
             
             let pseudos = congruencial_mixto(Xn, a, b, mod, mod, cant, [])
