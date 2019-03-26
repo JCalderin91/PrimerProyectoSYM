@@ -23,24 +23,24 @@
             <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                            <a class="nav-link" href="../index.html">
+                        <a class="nav-link" href="../index.html">
                             Datos iniciales
                         </a>
                     </li>
 
                     <li class=" nav-item dropdown active">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Metodos
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="cuadradosMedios.html">Cuadrado Medio</a>
-                                <a class="dropdown-item" href="productoMedio.html">Producto Medio</a>
-                                <a class="dropdown-item" href="productoMedioVariado.html">Producto Medio Variado</a>
-                                <a class="dropdown-item active" href="congruencialMixto.html">Congruencial Mixto</a>
-                                <a class="dropdown-item" href="congruencialMultiplicativo.html">Congruencial
-                                    Multiplicativo</a>
-                            </div>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Metodos
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="cuadradosMedios.html">Cuadrado Medio</a>
+                            <a class="dropdown-item" href="productoMedio.html">Producto Medio</a>
+                            <a class="dropdown-item" href="productoMedioVariado.html">Producto Medio Variado</a>
+                            <a class="dropdown-item active" href="congruencialMixto.html">Congruencial Mixto</a>
+                            <a class="dropdown-item" href="congruencialMultiplicativo.html">Congruencial
+                                Multiplicativo</a>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -88,12 +88,16 @@
         <table id="tableResults" class="table table-sm table-striped ">
             <thead class="bg-dark text-white">
                 <tr>
-                    <td>Dias</td>
-                    <td>Datos</td>
+                    <td class="text-center">Dias</td>
+                    <td class="text-center">Datos</td>
                 </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+                <tr><td colspan="2" class="text-center">No se han realizado operaciones</td></tr>
+            </tbody>
         </table>
+        <br>
+        <div id="responseDiv"></div>
     </div>
 
 
