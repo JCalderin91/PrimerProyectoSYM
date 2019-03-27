@@ -265,10 +265,10 @@ function resolve(pseudos, dias) {
         <p>Respuesta: ${findMaxVisited(destinos, 'destino')[0].destino}, con ${findMaxVisited(destinos, 'destino')[0].cantidad} paquetes</p>
         <br>
         <h6>Determinar el nivel socioeconomico que mas compro paquetes durante la simulacion</h6>
-        <p>Respuesta: ${findMaxLevel(destinos, 'clase').clase}, con ${findMaxLevel(destinos, 'clase').cantidad} paquetes</p>
+        <p>Respuesta: Clase ${findMaxLevel(destinos, 'clase').clase}, con ${findMaxLevel(destinos, 'clase').cantidad} paquetes</p>
         <br>
         <h6>Calcular la cantidad total de ingreso en la agencia por la venta de paquetes durante la simulacion.</h6>
-        <p>Respuesta: ${getTotal(destinos)} $</p>`
+        <p>Respuesta: Se registro un total de ${getTotal(destinos)} $</p>`
 
         $('#responseDiv').html(response)
         return {
