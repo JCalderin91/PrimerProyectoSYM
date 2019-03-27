@@ -249,16 +249,67 @@ function resolve(pseudos, dias) {
 
     //OPERACIONES PARA RESPONDER PREGUNTAS
     console.log(results)
-
-
-
-
-
-
+    destinos = getPackages(results);
+    console.log(findMaxVisited(destinos, 'destino'));
+    console.log(findMaxLevel(destinos, 'clase'));
+    console.log(getTotal(destinos));
     return {
         estructure: content,
         data: '-'
     }
+}
+
+function findMaxVisited (array, prop){
+    
+    return Object.values(groupBy(array, prop)).sort(function(a, b){
+        return (b.cantidad - a.cantidad)
+    }).slice(0,3);  
+}
+
+function findMaxLevel(array, prop){
+    
+    return Object.values(groupBy(array, prop)).sort(function(a, b){
+        return (b.cantidad - a.cantidad)
+    })[0];  
+}
+
+function getTotal(array){
+
+    return array.reduce(function(acc,item){
+        return acc +  item.costo;
+        
+    }, 0);
+}
+
+function groupBy(array, prop){
+   return array.reduce(function(groups, item) {
+        var val = item[prop];
+        if(prop == 'clase'){
+            groups[val] = groups[val] || {clase: item.clase, cantidad: 0 };
+            groups[val].cantidad += 1;
+        }else{
+            groups[val] = groups[val] || {destino: item.destino, cantidad: 0 };
+            groups[val].cantidad += Number(item.cantidad);
+        }
+        return groups;
+    }, {});
+}
+function getPackages (array){
+    
+    let d = [];
+
+    array.forEach(function(item, index){
+        item.content.forEach(function(item){
+          d.push({
+              destino: item.destino.value,
+              cantidad: item.cantPersonas.value,
+              costo: item.costo * Number(item.cantPersonas.value),
+              clase: item.clase.value
+          });
+        });
+    });
+
+    return d; 
 }
 
 function loadTable(idTable, arr) {
