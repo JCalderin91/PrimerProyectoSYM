@@ -43,27 +43,16 @@ function congruencial_multiplicativo(Xn, a, mod, div, cant, result) {
     return result
 }
 
+
 /*************************************************/
 //Determina el nivel de aceptacion de acuerdo a la cantidad de numeros aleatorios
 function nivel_ks(cant) {
     //Si la cantidad de numeros aleatorios es 8, entonces se devuelve el nivel correspondiente
-    if (cant == 8) {
-        return 0.45427;
+    if (cant == 22) {
+        return 0.28087;
     }
-    if (cant == 10) {
-        return 0.40925;
-    }
-    if (cant == 20) {
-        return 0.29408;
-    }
-    if (cant == 30) {
-        return 0.24170;
-    }
-    if (cant == 40) {
-        return 0.21012;
-    }
-    if (cant == 50) {
-        return 0.18841;
+    if (cant == 43) {
+        return 0.20056;
     }
     if (cant > 50) {
         return 1.36 / Math.sqrt(cant);
@@ -87,7 +76,7 @@ function prueba_ks(a) {
         return a - b
     }); //Se ordenan los numeros aleatorios de menor a mayor
 
-    console.log(num)
+    //console.log(num)
     //ciclo que se repite de acuerdo a la cantidad de numeros aleatorios
     //Por ejemplo: si hay 3 numeros aleatorio [0.05, 0.15, 0.34]
     //arr_i[0] = (i+1)/ cantidad de numeros aleatorios => (0+1)/3
@@ -129,6 +118,8 @@ function prueba_ks(a) {
 
     //Ahora si el valor de max es menor o igual al nivel de aceptacion, se aceptan los numeros aleatorios
     //Si no, se rechazan.
+    console.log(max)
+    console.log('*'+nivel_ks(cant))
     if (max <= nivel_ks(cant)) {
         return true;
     } else {
@@ -136,6 +127,13 @@ function prueba_ks(a) {
     }
 
 }
+
+
+$('#clear').on('click', function(){
+    $('form')[0].reset();
+    $('#tableResults tbody').html('');
+})
+
 
 
 
@@ -157,127 +155,133 @@ function resolve(pseudos, dias) {
     let results = [];
     let costo1, costo2 = 0;
     let content, data = ''
+    let _pseudos = [...pseudos];
 
- 
-    for (let i = 0; i < dias; i++) {
-        p = pseudos.slice(0, 1)[0]
-        pAux = pseudos.slice(0, 1)[0]
-        pseudos.shift()
-        //console.log('Dia #'+(i+1)+' - Pseudoaleatorio: '+p)
-        //console.log(searchPseudo(p, table4))
-        day = searchPseudo(p, table4)
+    console.log(_pseudos)
+    console.log('-')
+    console.log(pseudos)
 
-        for (let j = 1; j <= day.value; j++) {
-            //console.log('Paquete #'+j)
+    if(prueba_ks(_pseudos)){    
+        for (let i = 0; i < dias; i++) {
             p = pseudos.slice(0, 1)[0]
+            pAux = pseudos.slice(0, 1)[0]
             pseudos.shift()
-            //console.log(searchPseudo(p, table1))  
-            destino = {
-                value: searchPseudo(p, table1).value,
-                pseudo: p
-            }
-            costo1 = searchPseudo(p, table1).primera
-            costo2 = searchPseudo(p, table1).turista
-
-
-            p = pseudos.slice(0, 1)[0]
-            pseudos.shift()
-            //console.log(p)
-            //console.log(searchPseudo(p, table2)) 
-            if (searchPseudo(p, table2).value === 'Primera') {
-                costo = costo1
-                clase = {
-                    value: 'Alta',
+            //console.log('Dia #'+(i+1)+' - Pseudoaleatorio: '+p)
+            //console.log(searchPseudo(p, table4))
+            day = searchPseudo(p, table4)
+    
+            for (let j = 1; j <= day.value; j++) {
+                //console.log('Paquete #'+j)
+                p = pseudos.slice(0, 1)[0]
+                pseudos.shift()
+                //console.log(searchPseudo(p, table1))  
+                destino = {
+                    value: searchPseudo(p, table1).value,
                     pseudo: p
                 }
-            } else {
-                costo = costo2
-                clase = {
-                    value: 'Media',
+                costo1 = searchPseudo(p, table1).primera
+                costo2 = searchPseudo(p, table1).turista            
+    
+    
+                p = pseudos.slice(0, 1)[0]
+                pseudos.shift()
+                //console.log(searchPseudo(p, table3)) 
+                cantPersonas = {
+                    value: searchPseudo(p, table3).value,
                     pseudo: p
                 }
+    
+    
+                p = pseudos.slice(0, 1)[0]
+                pseudos.shift()
+                //console.log(p)
+                //console.log(searchPseudo(p, table2)) 
+                if (searchPseudo(p, table2).value === 'Primera') {
+                    costo = costo1 * parseInt(cantPersonas.value)
+                    clase = {
+                        value: 'Alta',
+                        pseudo: p
+                    }
+                } else {
+                    costo = costo2 * parseInt(cantPersonas.value)
+                    clase = {
+                        value: 'Media',
+                        pseudo: p
+                    }
+                }
+    
+    
+    
+    
+                result.push({
+                    paquete: j,
+                    destino: destino,
+                    costo: costo,
+                    clase: clase,
+                    cantPersonas: cantPersonas,
+                    pseudo: pAux
+                })
             }
-
-
-            p = pseudos.slice(0, 1)[0]
-            pseudos.shift()
-            //console.log(searchPseudo(p, table3)) 
-            cantPersonas = {
-                value: searchPseudo(p, table3).value,
-                pseudo: p
-            }
-
-            result.push({
-                paquete: j,
-                destino: destino,
-                costo: costo,
-                clase: clase,
-                cantPersonas: cantPersonas,
+            results.push({
+                content: result,
                 pseudo: pAux
             })
+            result = []
         }
-        results.push({
-            content: result,
-            pseudo: pAux
-        })
-        result = []
-    }
-
-
-    results.forEach(function (item, index) {
-        data = `<table class="table table-sm text-center mb-0" >`
-        item.content.forEach(function (item) {
-            data += `<tr>
-                <td><strong>Destino</strong>: ${item.destino.value} <span class="text-primary">(${item.destino.pseudo})</span> </td>
-                <td><strong>Clase</strong>: ${item.clase.value} <span class="text-primary">(${item.clase.pseudo})</span> </td>
-                <td><strong>Personas</strong>: ${item.cantPersonas.value} <span class="text-primary">(${item.cantPersonas.pseudo})</span> </td>
-                <td><strong>Costo</strong>: ${item.costo} $</td>
+    
+        results.forEach(function (item, index) {
+            data = `<table class="table table-sm mb-0">`
+            item.content.forEach(function (item) {
+                data += `<tr>
+                    <td class="row">
+                        <div class="col-md-3"><strong>Destino</strong>: ${item.destino.value} <span class="text-primary">(${item.destino.pseudo})</span> </div>
+                        <div class="col-md-3"><strong>Clase</strong>: ${item.clase.value} <span class="text-primary">(${item.clase.pseudo})</span> </div>
+                        <div class="col-md-3"><strong>Personas</strong>: ${item.cantPersonas.value} <span class="text-primary">(${item.cantPersonas.pseudo})</span> </div>
+                        <div class="col-md-3"><strong>Costo</strong>: ${item.costo} $</div>
+                    </td>
+                `
+            })
+            data += `</tr></table>`
+    
+            content += `<tr>
+                <td><strong>Dia: </strong>${index+1} - <strong>Paquetes: </strong>${item.content.length} <span class="text-primary">(${item.pseudo})</span></td>
+                <td>${data}</td>
             </tr>`
+            data = ''
         })
-        data += `</table>`
-
-        content += `<tr>
-            <td><strong>Dia: </strong>${index+1} - <strong>Paquetes: </strong>${item.content.length} <span class="text-primary">(${item.pseudo})</span></td>
-            <td>${data}</td>
-        </tr>`
-        data = ''
-    })
-
-
-
-
-
-    //OPERACIONES PARA RESPONDER PREGUNTAS
-    console.log(results)
-    destinos = getPackages(results);
-    console.log(findMaxVisited(destinos, 'destino'));
-    console.log(findMaxLevel(destinos, 'clase'));
-    console.log(getTotal(destinos));
-    return {
-        estructure: content,
-        data: '-'
+    
+        //OPERACIONES PARA RESPONDER PREGUNTAS
+        console.log(results)
+        destinos = getPackages(results);
+        console.log(findMaxVisited(destinos, 'destino'));
+        console.log(findMaxLevel(destinos, 'clase'));
+        console.log(getTotal(destinos));
+        return {
+            estructure: content,
+            data: '-'
+        }
+    }else{
+        swal ( "Oops" ,  "Estos datos no generan numeros pseudoaleatorios validos" ,  "error" );
+        $('form')[0].reset()
     }
+
 }
 
 function findMaxVisited (array, prop){
-    
     return Object.values(groupBy(array, prop)).sort(function(a, b){
         return (b.cantidad - a.cantidad)
     }).slice(0,3);  
 }
 
 function findMaxLevel(array, prop){
-    
     return Object.values(groupBy(array, prop)).sort(function(a, b){
         return (b.cantidad - a.cantidad)
     })[0];  
 }
 
 function getTotal(array){
-
     return array.reduce(function(acc,item){
-        return acc +  item.costo;
-        
+        return acc +  item.costo;    
     }, 0);
 }
 
@@ -294,21 +298,19 @@ function groupBy(array, prop){
         return groups;
     }, {});
 }
-function getPackages (array){
-    
-    let d = [];
 
+function getPackages (array){
+    let d = [];
     array.forEach(function(item, index){
         item.content.forEach(function(item){
           d.push({
               destino: item.destino.value,
               cantidad: item.cantPersonas.value,
-              costo: item.costo * Number(item.cantPersonas.value),
+              costo: item.costo,
               clase: item.clase.value
           });
         });
     });
-
     return d; 
 }
 
@@ -326,96 +328,26 @@ function loadTable(idTable, arr) {
 }
 
 let table1 = [{
-        value: 'Tibet',
-        fmin: 0.020,
-        fmay: 0.020,
-        min: 0.000,
-        max: 0.019,
-        primera: 750,
-        turista: 630
-    },
-    {
-        value: 'Madrid',
-        fmin: 0.070,
-        fmay: 0.090,
-        min: 0.020,
-        max: 0.089,
-        primera: 590,
-        turista: 480
-    },
-    {
-        value: 'Venecia',
-        fmin: 0.150,
-        fmay: 0.240,
-        min: 0.090,
-        max: 0.239,
-        primera: 540,
-        turista: 420
-    },
-    {
-        value: 'Aruba',
-        fmin: 0.200,
-        fmay: 0.440,
-        min: 0.240,
-        max: 0.439,
-        primera: 230,
-        turista: 110
-    },
-    {
-        value: 'Miami',
-        fmin: 0.200,
-        fmay: 0.640,
-        min: 0.440,
-        max: 0.639,
-        primera: 310,
-        turista: 190
-    },
-    {
-        value: 'Acapulco',
-        fmin: 0.160,
-        fmay: 0.800,
-        min: 0.640,
-        max: 0.799,
-        primera: 450,
-        turista: 330
-    },
-    {
-        value: 'Paris',
-        fmin: 0.100,
-        fmay: 0.900,
-        min: 0.800,
-        max: 0.899,
-        primera: 665,
-        turista: 545
-    },
-    {
-        value: 'Rio de Janeiro',
-        fmin: 0.060,
-        fmay: 0.960,
-        min: 0.900,
-        max: 0.959,
-        primera: 428,
-        turista: 308
-    },
-    {
-        value: 'Buenos Aires',
-        fmin: 0.050,
-        fmay: 0.990,
-        min: 0.960,
-        max: 0.989,
-        primera: 497,
-        turista: 377
-    },
-    {
-        value: 'Londres',
-        fmin: 0.010,
-        fmay: 1.000,
-        min: 0.990,
-        max: 1.000,
-        primera: 685,
-        turista: 565
-    },
-]
+        value: 'Tibet', fmin: 0.020, fmay: 0.020, min: 0.000, max: 0.019, primera: 750, turista: 630
+    },    {
+        value: 'Madrid', fmin: 0.070, fmay: 0.090, min: 0.020, max: 0.089, primera: 590, turista: 480
+    },    {
+        value: 'Venecia', fmin: 0.150, fmay: 0.240, min: 0.090, max: 0.239, primera: 540, turista: 420
+    },    {
+        value: 'Aruba', fmin: 0.200, fmay: 0.440, min: 0.240, max: 0.439, primera: 230, turista: 110
+    },    {
+        value: 'Miami', fmin: 0.200, fmay: 0.640, min: 0.440, max: 0.639, primera: 310, turista: 190
+    },    {
+        value: 'Acapulco', fmin: 0.160, fmay: 0.800, min: 0.640, max: 0.799, primera: 450, turista: 330
+    },    {
+        value: 'Paris', fmin: 0.100, fmay: 0.900, min: 0.800, max: 0.899, primera: 665, turista: 545
+    },    {
+        value: 'Rio de Janeiro', fmin: 0.060, fmay: 0.960, min: 0.900, max: 0.959, primera: 428, turista: 308
+    },    {
+        value: 'Buenos Aires', fmin: 0.050, fmay: 0.990, min: 0.960, max: 0.989, primera: 497, turista: 377
+    },    {
+        value: 'Londres', fmin: 0.010, fmay: 1.000, min: 0.990, max: 1.000, primera: 685, turista: 565
+    },]
 
 let table2 = [{
         value: 'Turista',
@@ -530,8 +462,31 @@ let table4 = [{
     },
 ]
 
-loadTable('table1', table1)
-loadTable('table2', table2)
+let content = '';
+table1.forEach(function (item) {
+    content += `<tr>
+                    <td>${item.value}</td>
+                    <td>${item.fmin}</td>
+                    <td>${item.primera} $</td>
+                    <td>${item.turista} $</td>
+                    <td>${item.fmay}</td>
+                    <td>${item.min} - ${item.max}</td>
+                </tr>`
+})
+$('#table1 tbody').html(content);
+
+content = '';
+table2.forEach(function (item) {
+    content += `<tr>
+                    <td>${item.value}</td>
+                    <td>${item.fmin}</td>
+                    <td>Clase ${item.clase}</td>
+                    <td>${item.fmay}</td>
+                    <td>${item.min} - ${item.max}</td>
+                </tr>`
+})
+$('#table2 tbody').html(content);
+
 loadTable('table3', table3)
 loadTable('table4', table4)
 
