@@ -159,22 +159,30 @@ function resolve(pseudos, dias) {
 
     //console.log(_pseudos)
     //console.log('-')
-    //console.log(pseudos)
-
+    
     if (prueba_ks(_pseudos)) {
+        //console.log(pseudos)
+        let days = []
+        //console.log(days);
         for (let i = 0; i < dias; i++) {
-            p = pseudos.slice(0, 1)[0]
-            pAux = pseudos.slice(0, 1)[0]
-            pseudos.shift()
-            //console.log('Dia #'+(i+1)+' - Pseudoaleatorio: '+p)
-            //console.log(searchPseudo(p, table4))
-            day = searchPseudo(p, table4)
+            days.push({
+                day: i+1,
+                pseudo: pseudos.slice(0,1)[0],
+                cant: searchPseudo(pseudos.splice(0,1)[0], table4).value
+            });
+        }
+        //console.log('Arreglo para los aleatorios de cada dia')
+        //console.log(days)
+        //console.log(pseudos)
+        
 
-            for (let j = 1; j <= day.value; j++) {
-                //console.log('Paquete #'+j)
-                p = pseudos.slice(0, 1)[0]
-                pseudos.shift()
-                //console.log(searchPseudo(p, table1))  
+        //console.log('Recorreido de los dias')
+        for (let i = 0; i < days.length; i++) {
+            //console.log('Dia: '+(i+1))
+            pAux = days[i].pseudo
+
+            for (let j = 0; j < days[i].cant; j++) {   
+                p = pseudos.splice(0, 1)[0] 
                 destino = {
                     value: searchPseudo(p, table1).value,
                     pseudo: p
@@ -183,19 +191,14 @@ function resolve(pseudos, dias) {
                 costo2 = searchPseudo(p, table1).turista
 
 
-                p = pseudos.slice(0, 1)[0]
-                pseudos.shift()
-                //console.log(searchPseudo(p, table3)) 
+                p = pseudos.splice(0, 1)[0]
                 cantPersonas = {
                     value: searchPseudo(p, table3).value,
                     pseudo: p
                 }
 
 
-                p = pseudos.slice(0, 1)[0]
-                pseudos.shift()
-                //console.log(p)
-                //console.log(searchPseudo(p, table2)) 
+                p = pseudos.splice(0, 1)[0]
                 if (searchPseudo(p, table2).value === 'Primera') {
                     costo = costo1 * parseInt(cantPersonas.value)
                     clase = {
@@ -210,9 +213,6 @@ function resolve(pseudos, dias) {
                     }
                 }
 
-
-
-
                 result.push({
                     paquete: j,
                     destino: destino,
@@ -221,13 +221,21 @@ function resolve(pseudos, dias) {
                     cantPersonas: cantPersonas,
                     pseudo: pAux
                 })
+            
             }
+            //console.log('Resusltados del dia')
+            //console.log(result)
             results.push({
                 content: result,
                 pseudo: pAux
             })
-            result = []
+
         }
+        result = []
+
+
+
+        
 
         results.forEach(function (item, index) {
             data = `<table class="table table-sm mb-0">`
@@ -235,8 +243,8 @@ function resolve(pseudos, dias) {
                 data += `<tr>
                     <td class="row">
                         <div class="col-md-3"><strong>Destino</strong>: ${item.destino.value} <span class="text-primary">(${item.destino.pseudo})</span> </div>
-                        <div class="col-md-3"><strong>Clase</strong>: ${item.clase.value} <span class="text-primary">(${item.clase.pseudo})</span> </div>
                         <div class="col-md-3"><strong>Personas</strong>: ${item.cantPersonas.value} <span class="text-primary">(${item.cantPersonas.pseudo})</span> </div>
+                        <div class="col-md-3"><strong>Clase</strong>: ${item.clase.value} <span class="text-primary">(${item.clase.pseudo})</span> </div>
                         <div class="col-md-3"><strong>Costo</strong>: ${item.costo} $</div>
                     </td>
                 `
@@ -252,17 +260,13 @@ function resolve(pseudos, dias) {
 
 
         //OPERACIONES PARA RESPONDER PREGUNTAS
-        //console.log(results)
         destinos = getPackages(results);
-        //console.log(findMaxVisited(destinos, 'destino'));
-        //console.log(findMaxLevel(destinos, 'clase'));
-        //console.log(getTotal(destinos));
 
 
         $('#responseDiv').html('')
         let response = `<h4>Respuestas</h4>
         <h6>¿Cuales(es) ciudades(es) han recibido la mayor cantidad de turistas por medio de paquetes vendidos?</h6>
-        <p>Respuesta: ${findMaxVisited(destinos, 'destino')[0].destino}, con ${findMaxVisited(destinos, 'destino')[0].cantidad} paquetes</p>
+        <p>Respuesta: ${findMaxVisited(destinos, 'destino')[0].destino}, con ${findMaxVisited(destinos, 'destino')[0].cantidad} personas</p>
         <br>
         <h6>Determinar el nivel socioeconomico que mas compro paquetes durante la simulacion</h6>
         <p>Respuesta: Clase ${findMaxLevel(destinos, 'clase').clase}, con ${findMaxLevel(destinos, 'clase').cantidad} paquetes</p>
@@ -279,6 +283,7 @@ function resolve(pseudos, dias) {
                 total: getTotal(destinos)
             }
         }
+
     } else {
         swal("Oops", "Estos datos no generan numeros pseudoaleatorios validos", "error");
         $('form')[0].reset()
