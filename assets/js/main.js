@@ -268,9 +268,11 @@ function resolve(pseudos, dias) {
 }
 
 function findMaxVisited (array, prop){
-    return Object.values(groupBy(array, prop)).sort(function(a, b){
+    let data = Object.values(groupBy(array, prop)).sort(function(a, b){
         return (b.cantidad - a.cantidad)
-    }).slice(0,3);  
+    });
+    
+   return data.filter(item => item.cantidad == data[0].cantidad)
 }
 
 function findMaxLevel(array, prop){
