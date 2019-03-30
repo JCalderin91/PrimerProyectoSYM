@@ -85,13 +85,18 @@
         <table id="tableResults" class="table table-sm table-striped ">
             <thead class="bg-dark text-white">
                 <tr>
-                    <td>Dias</td>
-                    <td>Datos</td>
+                    <td class="text-center">Dias</td>
+                    <td class="text-center">Datos</td>
                 </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+                <tr><td colspan="2" class="text-center">No se han realizado operaciones</td></tr>
+            </tbody>
         </table>
+        <br>
+        <div id="responseDiv"></div>
     </div>
+
 
 
     <script src="../assets/js/jquery.min.js"></script>
@@ -109,7 +114,9 @@
             let dias = parseInt($('#dias').val());
 
             let pseudos = congruencial_multiplicativo(Xn, a, mod, mod, cant, [])
-            $('#tableResults tbody').html(resolve(pseudos, dias).estructure);
+            let response = resolve(pseudos, dias)
+            console.log(response.data)
+            $('#tableResults tbody').html(response.estructure);
 
         })
     </script>
