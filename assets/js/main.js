@@ -48,18 +48,67 @@ function congruencial_multiplicativo(Xn, a, mod, div, cant, result) {
 //Determina el nivel de aceptacion de acuerdo a la cantidad de numeros aleatorios
 function nivel_ks(cant) {
     //Si la cantidad de numeros aleatorios es 8, entonces se devuelve el nivel correspondiente
-    if (cant == 22) {
-        return 0.28087;
-    }
-    if (cant == 43) {
-        return 0.20056;
-    }
     if (cant > 50) {
         return 1.36 / Math.sqrt(cant);
+    }else{
+        return ksLevel.filter(item => item.num === cant)[0].val
     }
 
 }
 
+
+let ksLevel = [
+    {num: 1, val:0.97500},
+    {num: 2, val:0.84186},
+    {num: 3, val:0.70760},
+    {num: 4, val:0.62394},
+    {num: 5, val:0.56328},
+    {num: 6, val:0.51926},
+    {num: 7, val:0.48342},
+    {num: 8, val:0.45427},
+    {num: 9, val:0.43001},
+    {num: 10, val:0.40925},
+    {num: 11, val:0.39122},
+    {num: 12, val:0.37543},
+    {num: 13, val:0.36143},
+    {num: 14, val:0.34890},
+    {num: 15, val:0.33750},
+    {num: 16, val:0.32733},
+    {num: 17, val:0.31796},
+    {num: 18, val:0.30936},
+    {num: 19, val:0.30143},
+    {num: 20, val:0.29408},
+    {num: 21, val:0.28724},
+    {num: 22, val:0.28087},
+    {num: 23, val:0.27490},
+    {num: 24, val:0.26931},
+    {num: 25, val:0.26404},
+    {num: 26, val:0.25908},
+    {num: 27, val:0.25438},
+    {num: 28, val:0.24993},
+    {num: 29, val:0.24571},
+    {num: 30, val:0.24170},
+    {num: 31, val:0.23788},
+    {num: 32, val:0.23424},
+    {num: 33, val:0.23076},
+    {num: 34, val:0.22743},
+    {num: 35, val:0.22425},
+    {num: 36, val:0.22119},
+    {num: 37, val:0.21825},
+    {num: 38, val:0.21544},
+    {num: 39, val:0.21273},
+    {num: 40, val:0.21012},
+    {num: 41, val:0.22760},
+    {num: 42, val:0.20517},
+    {num: 43, val:0.20283},
+    {num: 44, val:0.20056},
+    {num: 45, val:0.19837},
+    {num: 46, val:0.19625},
+    {num: 47, val:0.19420},
+    {num: 48, val:0.19221},
+    {num: 49, val:0.19028},
+    {num: 50, val:0.18841},
+]
 
 
 /*************************************************/
@@ -156,125 +205,132 @@ function resolve(pseudos, dias) {
     let costo1, costo2 = 0;
     let content, data = ''
     let _pseudos = [...pseudos];
+    let pseudoEnd = [];
 
-    //console.log(_pseudos)
-    //console.log('-')
+    console.log(pseudos)
+    console.log('-')
     
-    if (prueba_ks(_pseudos)) {
-        //console.log(pseudos)
-        let days = []
-        //console.log(days);
-        for (let i = 0; i < dias; i++) {
-            days.push({
-                day: i+1,
-                pseudo: pseudos.slice(0,1)[0],
-                cant: searchPseudo(pseudos.splice(0,1)[0], table4).value
-            });
-        }
-        //console.log('Arreglo para los aleatorios de cada dia')
+    //console.log(pseudos)
+    let days = []
+    //console.log(days);
+    for (let i = 0; i < dias; i++) {
+        days.push({
+            day: i+1,
+            pseudo: pseudos.slice(0,1)[0],
+            cant: searchPseudo(pseudos.slice(0,1)[0], table4).value
+        });
+        //console.log('days')
         //console.log(days)
-        //console.log(pseudos)
-        
+        //console.log(searchPseudo(pseudos.slice(0,1)[0], table4).value)
+        pseudoEnd.push(pseudos.splice(0,1)[0]);
+    }
+    //console.log('Arreglo para los aleatorios de cada dia')
+    //console.log(days)
+    //console.log(pseudos)       
 
-        //console.log('Recorreido de los dias')
-        for (let i = 0; i < days.length; i++) {
-            //console.log('Dia: '+(i+1))
-            pAux = days[i].pseudo
+    //console.log('Recorreido de los dias')
+    for (let i = 0; i < days.length; i++) {
+        //console.log('Dia: '+(i+1))
+        pAux = days[i].pseudo
+        //console.log('cantidad: '+days[i].cant)
 
-            for (let j = 0; j < days[i].cant; j++) {   
-                p = pseudos.splice(0, 1)[0] 
-                destino = {
-                    value: searchPseudo(p, table1).value,
-                    pseudo: p
-                }
-                costo1 = searchPseudo(p, table1).primera
-                costo2 = searchPseudo(p, table1).turista
-
-
-                p = pseudos.splice(0, 1)[0]
-                cantPersonas = {
-                    value: searchPseudo(p, table3).value,
-                    pseudo: p
-                }
-
-
-                p = pseudos.splice(0, 1)[0]
-                if (searchPseudo(p, table2).value === 'Primera') {
-                    costo = costo1 * parseInt(cantPersonas.value)
-                    clase = {
-                        value: 'Alta',
-                        pseudo: p
-                    }
-                } else {
-                    costo = costo2 * parseInt(cantPersonas.value)
-                    clase = {
-                        value: 'Media',
-                        pseudo: p
-                    }
-                }
-
-                result.push({
-                    paquete: j,
-                    destino: destino,
-                    costo: costo,
-                    clase: clase,
-                    cantPersonas: cantPersonas,
-                    pseudo: pAux
-                })
-            
+        for (let j = 0; j < days[i].cant; j++) {   
+            p = pseudos.slice(0, 1)[0] 
+            pseudoEnd.push(pseudos.splice(0,1)[0]);
+            destino = {
+                value: searchPseudo(p, table1).value,
+                pseudo: p
             }
-            //console.log('Resusltados del dia')
-            //console.log(result)
-            results.push({
-                content: result,
+            costo1 = searchPseudo(p, table1).primera
+            costo2 = searchPseudo(p, table1).turista
+
+
+            p = pseudos.slice(0, 1)[0]
+            pseudoEnd.push(pseudos.splice(0,1)[0]);
+            cantPersonas = {
+                value: searchPseudo(p, table3).value,
+                pseudo: p
+            }
+
+
+            p = pseudos.slice(0, 1)[0]
+            pseudoEnd.push(pseudos.splice(0,1)[0]);
+            if (searchPseudo(p, table2).value === 'Primera') {
+                costo = costo1 * parseInt(cantPersonas.value)
+                clase = {
+                    value: 'Alta',
+                    pseudo: p
+                }
+            } else {
+                costo = costo2 * parseInt(cantPersonas.value)
+                clase = {
+                    value: 'Media',
+                    pseudo: p
+                }
+            }
+
+            result.push({
+                paquete: j,
+                destino: destino,
+                costo: costo,
+                clase: clase,
+                cantPersonas: cantPersonas,
                 pseudo: pAux
             })
-
-        }
-        result = []
-
-
-
         
-
-        results.forEach(function (item, index) {
-            data = `<table class="table table-sm mb-0">`
-            item.content.forEach(function (item) {
-                data += `<tr>
-                    <td class="row">
-                        <div class="col-md-3"><strong>Destino</strong>: ${item.destino.value} <span class="text-primary">(${item.destino.pseudo})</span> </div>
-                        <div class="col-md-3"><strong>Personas</strong>: ${item.cantPersonas.value} <span class="text-primary">(${item.cantPersonas.pseudo})</span> </div>
-                        <div class="col-md-3"><strong>Clase</strong>: ${item.clase.value} <span class="text-primary">(${item.clase.pseudo})</span> </div>
-                        <div class="col-md-3"><strong>Costo</strong>: ${item.costo} $</div>
-                    </td>
-                `
-            })
-            data += `</tr></table>`
-
-            content += `<tr>
-                <td class="text-center"><strong>Dia: </strong>${index+1} - <strong>Paquetes: </strong>${item.content.length} <span class="text-primary">(${item.pseudo})</span></td>
-                <td>${data}</td>
-            </tr>`
-            data = ''
+        }
+        //console.log('Resusltados del dia')
+        //console.log(result)
+        results.push({
+            content: result,
+            pseudo: pAux
         })
 
+        result = []
+    }
 
-        //OPERACIONES PARA RESPONDER PREGUNTAS
-        destinos = getPackages(results);
+    console.log(pseudoEnd); //Pseudoaleatorios utilizados        
+
+    results.forEach(function (item, index) {
+        data = `<table class="table table-sm mb-0">`
+        item.content.forEach(function (item) {
+            data += `<tr>
+                <td class="row">
+                    <div class="col-md-3"><strong>Destino</strong>: ${item.destino.value} <span class="text-primary">(${item.destino.pseudo})</span> </div>
+                    <div class="col-md-3"><strong>Personas</strong>: ${item.cantPersonas.value} <span class="text-primary">(${item.cantPersonas.pseudo})</span> </div>
+                    <div class="col-md-3"><strong>Clase</strong>: ${item.clase.value} <span class="text-primary">(${item.clase.pseudo})</span> </div>
+                    <div class="col-md-3"><strong>Costo</strong>: ${item.costo} $</div>
+                </td>
+            `
+        })
+        data += `</tr></table>`
+
+        content += `<tr>
+            <td class="text-center"><strong>Dia: </strong>${index+1} - <strong>Paquetes: </strong>${item.content.length} <span class="text-primary">(${item.pseudo})</span></td>
+            <td>${data}</td>
+        </tr>`
+        data = ''
+    })
 
 
-        $('#responseDiv').html('')
-        let response = `<h4>Respuestas</h4>
-        <h6>¿Cuales(es) ciudades(es) han recibido la mayor cantidad de turistas por medio de paquetes vendidos?</h6>
-        <p>Respuesta: ${findMaxVisited(destinos, 'destino')[0].destino}, con ${findMaxVisited(destinos, 'destino')[0].cantidad} personas</p>
-        <br>
-        <h6>Determinar el nivel socioeconomico que mas compro paquetes durante la simulacion</h6>
-        <p>Respuesta: Clase ${findMaxLevel(destinos, 'clase').clase}, con ${findMaxLevel(destinos, 'clase').cantidad} paquetes</p>
-        <br>
-        <h6>Calcular la cantidad total de ingreso en la agencia por la venta de paquetes durante la simulacion.</h6>
-        <p>Respuesta: Se registro un total de ${getTotal(destinos)} $</p>`
+    //OPERACIONES PARA RESPONDER PREGUNTAS
+    destinos = getPackages(results);
 
-        $('#responseDiv').html(response)
+
+    $('#responseDiv').html('')
+    let response = `<h4>Respuestas</h4>
+    <h6 class="font-weight-bold">¿Cuales(es) ciudades(es) han recibido la mayor cantidad de turistas por medio de paquetes vendidos?</h6>
+    <p>Respuesta: ${findMaxVisited(destinos, 'destino')[0].destino}, con ${findMaxVisited(destinos, 'destino')[0].cantidad} personas</p>
+    <br>
+    <h6 class="font-weight-bold">Determinar el nivel socioeconomico que mas compro paquetes durante la simulacion</h6>
+    <p>Respuesta: Clase ${findMaxLevel(destinos, 'clase').clase}, con ${findMaxLevel(destinos, 'clase').cantidad} paquetes</p>
+    <br>
+    <h6 class="font-weight-bold">Calcular la cantidad total de ingreso en la agencia por la venta de paquetes durante la simulacion.</h6>
+    <p>Respuesta: Se registro un total de ${getTotal(destinos)} $</p>`
+
+    $('#responseDiv').html(response)
+    
+    if (prueba_ks(pseudoEnd)) {
         return {
             estructure: content,
             data: {
@@ -283,7 +339,6 @@ function resolve(pseudos, dias) {
                 total: getTotal(destinos)
             }
         }
-
     } else {
         swal("Oops", "Estos datos no generan numeros pseudoaleatorios validos", "error");
         $('form')[0].reset()
