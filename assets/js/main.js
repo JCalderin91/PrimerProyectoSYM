@@ -199,12 +199,11 @@ $('#clear').on('click', function () {
 //console.log(congruencial_multiplicativo(45, 11, 128, 128, 5, []))
 
 function resolve(pseudos, dias) {
-    let day, p, pAux, destino, cantPersonas, clase;
+    let p, pAux, destino, cantPersonas, clase;
     let result = [];
     let results = [];
     let costo1, costo2 = 0;
     let content, data = ''
-    let _pseudos = [...pseudos];
     let pseudoEnd = [];
 
     console.log(pseudos)
