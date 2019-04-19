@@ -92,7 +92,7 @@
             </tbody>
         </table>
         <br>
-        <div id="responseDiv"></div>
+        <div class="card p-3" id="responseDiv"></div>
     </div>
 
 
@@ -110,7 +110,7 @@
             let k = $('#Xn').val().length;
 
             //console.log(cant)
-            console.log(cuadrado_medio(sem, cant, k, []))
+            //console.log(cuadrado_medio(sem, cant, k, []))
             let pseudos = cuadrado_medio(sem, cant, k, [])
             $('#tableResults tbody').html(resolve(pseudos, dias).estructure);
 
