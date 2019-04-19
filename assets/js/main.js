@@ -266,7 +266,8 @@ function resolve(pseudos, dias) {
         $('#responseDiv').html('')
         let response = `<h4>Respuestas</h4>
         <h6>¿Cuales(es) ciudades(es) han recibido la mayor cantidad de turistas por medio de paquetes vendidos?</h6>
-        <p>Respuesta: ${findMaxVisited(destinos, 'destino')[0].destino}, con ${findMaxVisited(destinos, 'destino')[0].cantidad} personas</p>
+        <p>Respuesta: </p>
+        <ul class="list-group">${findMaxVisited(destinos, 'destino')}</ul>
         <br>
         <h6>Determinar el nivel socioeconomico que mas compro paquetes durante la simulacion</h6>
         <p>Respuesta: Clase ${findMaxLevel(destinos, 'clase').clase}, con ${findMaxLevel(destinos, 'clase').cantidad} paquetes</p>
@@ -295,8 +296,14 @@ function findMaxVisited (array, prop){
     let data = Object.values(groupBy(array, prop)).sort(function(a, b){
         return (b.cantidad - a.cantidad)
     });
-    
-   return data.filter(item => item.cantidad == data[0].cantidad)
+    let res = '';
+    let arr = data.filter(item => item.cantidad == data[0].cantidad);
+
+    arr.forEach(function(item){
+        res += `<li class="list-group-item">${item.destino}, con ${item.cantidad} personas</li>`;
+    })
+
+    return res;
 }
 
 function findMaxLevel(array, prop) {
