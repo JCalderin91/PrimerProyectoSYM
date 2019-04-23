@@ -229,9 +229,9 @@ function resolve(pseudos, dias) {
                 content: result,
                 pseudo: pAux
             })
-
+            result = []
         }
-        result = []
+        
 
 
 
